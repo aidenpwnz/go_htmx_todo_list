@@ -6,14 +6,18 @@ A good exercise to learn Go from scratch as a first timer, while also peeking in
 ## Getting Started
 
 1. Clone the repository:
-git clone https://github.com/aidenpwnz/go_htmx_todo_list.git
 
-2. Install dependencies:
-make init
+	git clone https://github.com/aidenpwnz/go_htmx_todo_list.git
 
-3. Run the application:
-make run
-This command will start the Go server, compile the Tailwind CSS styles, and watch for changes in the project files.
+3. Install dependencies:
 
-4. Open your web browser and navigate to `http://localhost:7173` (proxied by templ) to access the Todo List app.
+	make init
+
+4. Run the application:
+
+	make run
+
+	This command will start the Go server, compile the Tailwind CSS styles, and watch for changes in the project files.
+
+5. Open your web browser and navigate to `http://localhost:7173` (proxied by templ) to access the Todo List app.
 
