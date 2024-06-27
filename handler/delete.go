@@ -18,6 +18,5 @@ func (h *TodoHandler) RenderDeleteTodo(c echo.Context) error {
 		}
 	}
 
-	// Stream the buffer to the response
 	return render(c, todos.TodoList(*h.Items))
 }
