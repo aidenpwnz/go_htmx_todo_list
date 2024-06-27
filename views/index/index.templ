@@ -1,0 +1,25 @@
+package index
+
+import (
+	"todo_list/views/base"
+	"todo_list/views/todos"
+	"todo_list/views/form"
+	"todo_list/models"
+)
+
+templ Index(items []models.TodoItem) {
+	@base.Page() {
+		<div id="alert-container">
+			<!-- Alerts will be inserted here -->
+		</div>
+		<div class="flex flex-col justify-center items-center w-screen h-screen">
+			<h1 class="text-2xl font-extrabold text-gray-900 dark:text-white pt-8 h-[15vh]"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 ">GO + HTMX + TEMPL + TAILWIND </span></h1>
+			<div class="gap-6 h-[50vh] flex flex-wrap overflow-y-scroll justify-center px-10" id="todo-list">
+				@todos.TodoList(items)
+			</div>
+			<div class="container mx-auto flex flex-col justify-end items-end my-4 gap-y-4 h-[35vh]">
+				@form.Form()
+			</div>
+		</div>
+	}
+}
