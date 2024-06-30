@@ -1,22 +1,36 @@
 package handler
 
 import (
-	"fmt"
+	"context"
+	"time"
 
 	"github.com/labstack/echo/v4"
 
-	"todo_list/views/todos"
+	"todo_list/db"
+	"todo_list/views"
 )
 
 func (h *TodoHandler) RenderDeleteTodo(c echo.Context) error {
 	id := c.Param("id")
-	fmt.Println(id)
-	for i, item := range *h.Items {
-		if item.Id == id {
-			*h.Items = append((*h.Items)[:i], (*h.Items)[i+1:]...)
-			break
-		}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	err := db.DeleteTodoItem(ctx, h.DBClient, id)
+	if err != nil {
+		message := "Failed to delete item"
+		Render(c, views.ErrorAlert(message))
+		return nil
 	}
 
-	return render(c, todos.TodoList(*h.Items))
+	items, err := db.GetTodoItems(h.DBClient)
+	if err != nil {
+		message := "Failed to retrieve items"
+		Render(c, views.ErrorAlert(message))
+		return nil
+	}
+	h.Items = &items
+
+	Render(c, views.SuccessAlert("Item deleted successfully"))
+	return Render(c, views.TodoList(*h.Items))
 }
