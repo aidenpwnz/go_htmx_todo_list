@@ -1,29 +1,20 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
+	"context"
+	"fmt"
 
-	"todo_list/handler"
-	"todo_list/models"
+	"todo_list/server"
 )
 
 func main() {
-	data := []models.TodoItem{}
+	app, dbClient := server.SetupServer()
 
-	app := echo.New()
-	app.Static("/dist", "dist")
-
-	todoHandler := handler.TodoHandler{
-		Items: &data,
-	}
-
-	app.GET("/", todoHandler.RenderIndex)
-
-	app.POST("/add", todoHandler.RenderAddTodo)
-
-	app.DELETE("/delete/:id", todoHandler.RenderDeleteTodo)
+	defer dbClient.Disconnect(context.Background())
 
 	port := ":8080"
 
 	app.Logger.Fatal(app.Start(port))
+
+	fmt.Printf("Server Started at port %s\n", port)
 }
