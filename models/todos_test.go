@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"todo_list/models"
+	"github.com/aidenpwnz/todo_list_go/models"
 )
 
 func TestGenerateID(t *testing.T) {

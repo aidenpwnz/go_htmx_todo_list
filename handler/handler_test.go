@@ -12,9 +12,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
 
-	"todo_list/handler"
-	"todo_list/models"
-	"todo_list/views"
+	"github.com/aidenpwnz/todo_list_go/handler"
+	"github.com/aidenpwnz/todo_list_go/models"
+	"github.com/aidenpwnz/todo_list_go/views"
 )
 
 func TestRenderAddTodo(t *testing.T) {

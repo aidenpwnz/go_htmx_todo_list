@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"todo_list/handler"
-	"todo_list/models"
+	"github.com/aidenpwnz/todo_list_go/handler"
+	"github.com/aidenpwnz/todo_list_go/models"
 )
 
 func TestSetupServer(t *testing.T) {

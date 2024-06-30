@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"todo_list/server"
+	"github.com/aidenpwnz/todo_list_go/server"
 )
 
 func main() {

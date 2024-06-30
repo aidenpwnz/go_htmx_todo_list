@@ -12,7 +12,7 @@ import "bytes"
 
 import (
 	"fmt"
-	"todo_list/models"
+	"github.com/aidenpwnz/todo_list_go/models"
 )
 
 func TodoItem(item models.TodoItem) templ.Component {

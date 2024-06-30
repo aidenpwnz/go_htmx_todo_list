@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"todo_list/models"
+	"github.com/aidenpwnz/todo_list_go/models"
 )
 
 func Index(items []models.TodoItem) templ.Component {

@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"todo_list/views"
+	"github.com/aidenpwnz/todo_list_go/views"
 )
 
 func (h *TodoHandler) RenderAlert(c echo.Context) error {

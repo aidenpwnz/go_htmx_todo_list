@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
 
-	"todo_list/models"
+	"github.com/aidenpwnz/todo_list_go/models"
 )
 
 func TestConnect(t *testing.T) {

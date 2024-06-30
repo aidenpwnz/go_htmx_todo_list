@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"todo_list/db"
+	"github.com/aidenpwnz/todo_list_go/db"
 )
 
 func (h *TodoHandler) GetTodoItems(c echo.Context) error {

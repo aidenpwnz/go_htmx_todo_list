@@ -7,9 +7,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"todo_list/db"
-	"todo_list/models"
-	"todo_list/views"
+	"github.com/aidenpwnz/todo_list_go/db"
+	"github.com/aidenpwnz/todo_list_go/models"
+	"github.com/aidenpwnz/todo_list_go/views"
 )
 
 func (h *TodoHandler) RenderAddTodo(c echo.Context) error {

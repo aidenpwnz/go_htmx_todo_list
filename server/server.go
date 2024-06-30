@@ -8,8 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"todo_list/db"
-	"todo_list/handler"
+	"github.com/aidenpwnz/todo_list_go/db"
+	"github.com/aidenpwnz/todo_list_go/handler"
 )
 
 func SetupServer() (*echo.Echo, *mongo.Client) {

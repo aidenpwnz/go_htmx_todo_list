@@ -1,4 +1,4 @@
-module todo_list
+module github.com/aidenpwnz/todo_list_go
 
 go 1.22.4
 

@@ -3,7 +3,7 @@ package server
 import (
 	"github.com/labstack/echo/v4"
 
-	"todo_list/handler"
+	"github.com/aidenpwnz/todo_list_go/handler"
 )
 
 type Router struct {
