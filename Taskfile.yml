@@ -1,14 +1,15 @@
 version: "3"
 
+output: prefixed
+
 tasks:
   # DB related tasks
   db/run:
     desc: Run the database
-    sources:
-      - docker ps -a | grep mongodb
     cmds:
-      - task: db/pull
-      - task: db/start
+      - >
+        docker ps --filter "name=^/mongodb$" --format '{{.Names}}' | grep 'mongodb' ||
+        (task db/pull && task db/start)
 
   db/pull:
     desc: Pull the latest mongodb community image
@@ -27,6 +28,7 @@ tasks:
       - docker rm mongodb
   # Run related tasks
   run:
+    aliases: [default]
     desc: Run the project
     deps:
       - task: db/run
@@ -39,7 +41,7 @@ tasks:
       - task: init
       - task: run/templ
       - task: run/tailwind
-      - task: run/server
+      - task: run/air
 
   run/templ:
     desc: Automatically regenerate templ files & refresh when a templ file changes
@@ -51,7 +53,7 @@ tasks:
     cmds:
       - tailwindcss -i ./input.css -o ./dist/output.css --minify --watch
 
-  run/server:
+  run/air:
     desc: Automatically recompile & refresh on a go file change
     cmds:
       - air
@@ -59,11 +61,17 @@ tasks:
   # Init related tasks
   init:
     desc: Initialize the project
+    deps:
+      - task: init/npm
     cmds:
       - go mod tidy
-      - npm install
       - task: init/flowbite
       - task: init/js
+
+  init/npm:
+    desc: Install npm packages
+    cmds:
+      - npm install
 
   init/flowbite:
     desc: Move the required file to the /dist folder to allow compatibility with Flowbite UI library
