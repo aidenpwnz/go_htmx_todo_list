@@ -1,4 +1,4 @@
-# go_htmx_todo_list
+# todo_list_go
 A todo list app made with Go, HTMX, Templ and tailwindcss. Echo was used as a web framwork.
 
 A good exercise to learn Go from scratch as a first timer, while also peeking into HTMX.
