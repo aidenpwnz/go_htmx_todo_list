@@ -9,15 +9,11 @@ A good exercise to learn Go from scratch as a first timer, while also peeking in
 
 	git clone https://github.com/aidenpwnz/go_htmx_todo_list.git
 
-3. Install dependencies:
+2. Run the application:
 
-	make init
+	task run
 
-4. Run the application:
+	This command will first check if mongo is rnning, if not it will pull the image and run it. Then, it will run the required commands to init the project and finally start the Go server, compile the Tailwind CSS styles, and watch for changes in the project files.
 
-	make run
-
-	This command will start the Go server, compile the Tailwind CSS styles, and watch for changes in the project files.
-
-5. Open your web browser and navigate to `http://localhost:7173` (proxied by templ) to access the Todo List app.
+3. Open your web browser and navigate to `http://localhost:7173` (proxied by templ) to access the Todo List app.
 
