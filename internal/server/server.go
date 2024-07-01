@@ -8,8 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/aidenpwnz/todo_list_go/db"
-	"github.com/aidenpwnz/todo_list_go/handler"
+	"github.com/aidenpwnz/todo_list_go/internal/db"
+	"github.com/aidenpwnz/todo_list_go/internal/handler"
 )
 
 func SetupServer() (*echo.Echo, *mongo.Client) {
@@ -29,11 +29,10 @@ func SetupServer() (*echo.Echo, *mongo.Client) {
 	}
 
 	app := echo.New()
-	app.Static("/dist", "dist")
 
 	data, _ := db.GetTodoItems(dbClient)
 
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &data,
 		DBClient: dbClient,
 	}

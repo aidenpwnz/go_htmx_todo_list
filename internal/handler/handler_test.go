@@ -1,4 +1,4 @@
-package handler_test
+package handler
 
 import (
 	"encoding/json"
@@ -12,9 +12,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
 
-	"github.com/aidenpwnz/todo_list_go/handler"
-	"github.com/aidenpwnz/todo_list_go/models"
-	"github.com/aidenpwnz/todo_list_go/views"
+	"github.com/aidenpwnz/todo_list_go/internal/models"
+	"github.com/aidenpwnz/todo_list_go/internal/views"
 )
 
 func TestRenderAddTodo(t *testing.T) {
@@ -37,7 +36,7 @@ func TestRenderAddTodo(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderAddTodo(c)
 
 		assert.NoError(t, err)
@@ -53,7 +52,7 @@ func TestRenderAddTodo(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderAddTodo(c)
 
 		assert.NoError(t, err)
@@ -72,7 +71,7 @@ func TestRenderAddTodo(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderAddTodo(c)
 
 		assert.NoError(t, err)
@@ -94,7 +93,7 @@ func TestRenderAddTodo(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderAddTodo(c)
 
 		assert.NoError(t, err)
@@ -127,7 +126,7 @@ func TestRenderAlert(t *testing.T) {
 			rec := httptest.NewRecorder()
 			c := e.NewContext(req, rec)
 
-			h := &handler.TodoHandler{}
+			h := &Handler{}
 			err := h.RenderAlert(c)
 
 			assert.NoError(t, err)
@@ -147,7 +146,7 @@ func TestRemoveAlert(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	h := &handler.TodoHandler{}
+	h := &Handler{}
 	err := h.RemoveAlert(c)
 
 	assert.NoError(t, err)
@@ -169,7 +168,7 @@ func TestRenderDeleteTodo(t *testing.T) {
 		c.SetParamNames("id")
 		c.SetParamValues("1")
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderDeleteTodo(c)
 
 		assert.NoError(t, err)
@@ -190,7 +189,7 @@ func TestRenderDeleteTodo(t *testing.T) {
 		c.SetParamNames("id")
 		c.SetParamValues("1")
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.RenderDeleteTodo(c)
 
 		assert.NoError(t, err)
@@ -207,7 +206,7 @@ func TestRenderIndex(t *testing.T) {
 	items := []models.TodoItem{
 		{Id: "1", Title: "Test Todo", Description: "Test Description"},
 	}
-	h := &handler.TodoHandler{Items: &items}
+	h := &Handler{Items: &items}
 	err := h.RenderIndex(c)
 
 	assert.NoError(t, err)
@@ -233,7 +232,7 @@ func TestGetTodoItems(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.GetTodoItems(c)
 
 		assert.NoError(t, err)
@@ -256,7 +255,7 @@ func TestGetTodoItems(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		h := &handler.TodoHandler{DBClient: mt.Client}
+		h := &Handler{DBClient: mt.Client}
 		err := h.GetTodoItems(c)
 
 		assert.NoError(t, err)
@@ -272,7 +271,7 @@ func TestRender(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	testComponent := views.SuccessAlert("Test message")
-	err := handler.Render(c, testComponent)
+	err := Render(c, testComponent)
 
 	assert.NoError(t, err)
 	assert.Contains(t, rec.Body.String(), "Test message")

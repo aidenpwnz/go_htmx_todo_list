@@ -10,22 +10,20 @@ tasks:
       - >
         docker ps --filter "name=^/mongodb$" --format '{{.Names}}' | grep 'mongodb' ||
         (task db/pull && task db/start)
-
   db/pull:
     desc: Pull the latest mongodb community image
     cmds:
       - docker pull mongodb/mongodb-community-server:latest
-
   db/start:
     desc: Start the mongodb container
     cmds:
       - docker run --name mongodb -d -p 27017:27017 mongodb/mongodb-community-server:latest
-
   db/stop:
     desc: Stop the mongodb container
     cmds:
       - docker stop mongodb
       - docker rm mongodb
+
   # Run related tasks
   run:
     aliases: [default]
@@ -34,7 +32,6 @@ tasks:
       - task: db/run
     cmds:
       - task: run/init
-
   run/init:
     desc: Initialize the project before running
     deps:
@@ -42,17 +39,14 @@ tasks:
       - task: run/templ
       - task: run/tailwind
       - task: run/air
-
   run/templ:
     desc: Automatically regenerate templ files & refresh when a templ file changes
     cmds:
       - templ generate --watch --proxy="http://localhost:8080" --open-browser=false
-
   run/tailwind:
     desc: Automatically refresh when css changes
     cmds:
       - tailwindcss -i ./input.css -o ./dist/output.css --minify --watch
-
   run/air:
     desc: Automatically recompile & refresh on a go file change
     cmds:
@@ -67,21 +61,18 @@ tasks:
       - go mod tidy
       - task: init/flowbite
       - task: init/js
-
   init/npm:
     desc: Install npm packages
     cmds:
       - npm install
-
   init/flowbite:
     desc: Move the required file to the /dist folder to allow compatibility with Flowbite UI library
     cmds:
       - cp ./node_modules/flowbite/dist/flowbite.min.js ./dist/flowbite.min.js
-
   init/js:
     desc: Move the custom js file to the /dist folder
     cmds:
-      - cp ./views/input.js ./dist/output.js
+      - cp ./internal/views/input.js ./dist/output.js
 
   test:
     desc: Run tests and generate coverage report

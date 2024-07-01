@@ -6,7 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/aidenpwnz/todo_list_go/models"
+	"github.com/aidenpwnz/todo_list_go/internal/models"
 )
 
 // Create a new todo item

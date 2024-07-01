@@ -5,10 +5,10 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/aidenpwnz/todo_list_go/db"
+	"github.com/aidenpwnz/todo_list_go/internal/db"
 )
 
-func (h *TodoHandler) GetTodoItems(c echo.Context) error {
+func (h *Handler) GetTodoItems(c echo.Context) error {
 	items, err := db.GetTodoItems(h.DBClient)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})

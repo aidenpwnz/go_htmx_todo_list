@@ -9,7 +9,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/a-h/templ"
 
-	"github.com/aidenpwnz/todo_list_go/models"
+	"github.com/aidenpwnz/todo_list_go/internal/models"
 )
 
 func TestTextArea(t *testing.T) {

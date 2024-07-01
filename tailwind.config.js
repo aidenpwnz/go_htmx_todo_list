@@ -3,7 +3,7 @@ module.exports = {
   mode: "jit",
   darkMode: "media",
   content: [
-    "./views/**/*.templ",
+    "./internal/views/**/*.templ",
     "./dist/output.css",
     "./node_modules/flowbite/**/*.js",
   ],

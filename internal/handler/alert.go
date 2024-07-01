@@ -6,10 +6,10 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/aidenpwnz/todo_list_go/views"
+	"github.com/aidenpwnz/todo_list_go/internal/views"
 )
 
-func (h *TodoHandler) RenderAlert(c echo.Context) error {
+func (h *Handler) RenderAlert(c echo.Context) error {
 	c.Request().ParseForm()
 	severity := c.FormValue("alert-severity")
 	message := c.FormValue("alert-message")
@@ -30,6 +30,6 @@ func (h *TodoHandler) RenderAlert(c echo.Context) error {
 	}
 }
 
-func (h *TodoHandler) RemoveAlert(c echo.Context) error {
+func (h *Handler) RemoveAlert(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }

@@ -3,15 +3,15 @@ package server
 import (
 	"github.com/labstack/echo/v4"
 
-	"github.com/aidenpwnz/todo_list_go/handler"
+	"github.com/aidenpwnz/todo_list_go/internal/handler"
 )
 
 type Router struct {
 	app         *echo.Echo
-	todoHandler *handler.TodoHandler
+	todoHandler *handler.Handler
 }
 
-func NewRouter(app *echo.Echo, todoHandler *handler.TodoHandler) *Router {
+func NewRouter(app *echo.Echo, todoHandler *handler.Handler) *Router {
 	return &Router{
 		app:         app,
 		todoHandler: todoHandler,
@@ -19,6 +19,8 @@ func NewRouter(app *echo.Echo, todoHandler *handler.TodoHandler) *Router {
 }
 
 func (r *Router) RegisterRoutes() {
+	r.app.Static("/dist", "dist")
+
 	// Main page
 	r.app.GET("/", r.todoHandler.RenderIndex)
 

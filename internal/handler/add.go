@@ -7,12 +7,12 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/aidenpwnz/todo_list_go/db"
-	"github.com/aidenpwnz/todo_list_go/models"
-	"github.com/aidenpwnz/todo_list_go/views"
+	"github.com/aidenpwnz/todo_list_go/internal/db"
+	"github.com/aidenpwnz/todo_list_go/internal/models"
+	"github.com/aidenpwnz/todo_list_go/internal/views"
 )
 
-func (h *TodoHandler) RenderAddTodo(c echo.Context) error {
+func (h *Handler) RenderAddTodo(c echo.Context) error {
 	r := c.Request()
 	r.ParseForm()
 	title := r.FormValue("title")

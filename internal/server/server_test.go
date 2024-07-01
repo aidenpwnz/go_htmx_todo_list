@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aidenpwnz/todo_list_go/handler"
-	"github.com/aidenpwnz/todo_list_go/models"
+	"github.com/aidenpwnz/todo_list_go/internal/handler"
+	"github.com/aidenpwnz/todo_list_go/internal/models"
 )
 
 func TestSetupServer(t *testing.T) {
@@ -39,7 +39,7 @@ func TestRenderIndex(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &[]models.TodoItem{},
 		DBClient: dbClient,
 	}
@@ -66,7 +66,7 @@ func TestRenderAddTodo(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &[]models.TodoItem{},
 		DBClient: dbClient,
 	}
@@ -91,7 +91,7 @@ func TestRenderDeleteTodo(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &[]models.TodoItem{},
 		DBClient: dbClient,
 	}
@@ -116,7 +116,7 @@ func TestRenderAlert(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &[]models.TodoItem{},
 		DBClient: dbClient,
 	}
@@ -141,7 +141,7 @@ func TestRemoveAlert(t *testing.T) {
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
-	todoHandler := handler.TodoHandler{
+	todoHandler := handler.Handler{
 		Items:    &[]models.TodoItem{},
 		DBClient: dbClient,
 	}
