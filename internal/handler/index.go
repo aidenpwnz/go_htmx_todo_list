@@ -7,5 +7,5 @@ import (
 )
 
 func (h *Handler) RenderIndex(c echo.Context) error {
-	return Render(c, views.Index(*h.Items))
+	return Render(c, views.Index(h.Items))
 }

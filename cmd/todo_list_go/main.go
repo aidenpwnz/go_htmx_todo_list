@@ -10,7 +10,12 @@ import (
 func main() {
 	app, dbClient := server.SetupServer()
 
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			fmt.Printf("Failed to disconnect from the database: %v\n", err)
+		}
+	}()
 
 	port := ":8080"
 

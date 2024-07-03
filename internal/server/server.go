@@ -6,6 +6,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/aidenpwnz/todo_list_go/internal/db"
@@ -30,12 +31,17 @@ func SetupServer() (*echo.Echo, *mongo.Client) {
 
 	app := echo.New()
 
+	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
+
 	data, _ := db.GetTodoItems(dbClient)
 
 	todoHandler := handler.Handler{
-		Items:    &data,
+		Items:    data,
 		DBClient: dbClient,
 	}
+
 	router := NewRouter(app, &todoHandler)
 	router.RegisterRoutes()
 

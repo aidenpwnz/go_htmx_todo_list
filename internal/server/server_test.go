@@ -17,7 +17,12 @@ func TestSetupServer(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	if app == nil {
 		t.Error("Expected app to be initialized, got nil")
@@ -33,14 +38,19 @@ func TestRenderIndex(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
 	todoHandler := handler.Handler{
-		Items:    &[]models.TodoItem{},
+		Items:    []models.TodoItem{},
 		DBClient: dbClient,
 	}
 
@@ -58,7 +68,12 @@ func TestRenderAddTodo(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	body := strings.NewReader("title=Test Todo")
 	req := httptest.NewRequest(http.MethodPost, "/add", body)
@@ -67,7 +82,7 @@ func TestRenderAddTodo(t *testing.T) {
 
 	c := app.NewContext(req, rec)
 	todoHandler := handler.Handler{
-		Items:    &[]models.TodoItem{},
+		Items:    []models.TodoItem{},
 		DBClient: dbClient,
 	}
 
@@ -85,14 +100,19 @@ func TestRenderDeleteTodo(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	req := httptest.NewRequest(http.MethodDelete, "/delete/123", nil)
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
 	todoHandler := handler.Handler{
-		Items:    &[]models.TodoItem{},
+		Items:    []models.TodoItem{},
 		DBClient: dbClient,
 	}
 
@@ -110,14 +130,19 @@ func TestRenderAlert(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	req := httptest.NewRequest(http.MethodGet, "/alert", nil)
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
 	todoHandler := handler.Handler{
-		Items:    &[]models.TodoItem{},
+		Items:    []models.TodoItem{},
 		DBClient: dbClient,
 	}
 
@@ -135,14 +160,19 @@ func TestRemoveAlert(t *testing.T) {
 	defer os.Unsetenv("MONGO_URI")
 
 	app, dbClient := SetupServer()
-	defer dbClient.Disconnect(context.Background())
+	defer func() {
+		err := dbClient.Disconnect(context.Background())
+		if err != nil {
+			t.Errorf("Failed to disconnect from the database: %v", err)
+		}
+	}()
 
 	req := httptest.NewRequest(http.MethodDelete, "/remove-alert", nil)
 	rec := httptest.NewRecorder()
 
 	c := app.NewContext(req, rec)
 	todoHandler := handler.Handler{
-		Items:    &[]models.TodoItem{},
+		Items:    []models.TodoItem{},
 		DBClient: dbClient,
 	}
 

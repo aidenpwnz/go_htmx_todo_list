@@ -10,7 +10,6 @@ import (
 )
 
 func (h *Handler) RenderAlert(c echo.Context) error {
-	c.Request().ParseForm()
 	severity := c.FormValue("alert-severity")
 	message := c.FormValue("alert-message")
 

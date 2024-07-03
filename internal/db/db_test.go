@@ -17,7 +17,12 @@ func TestConnect(t *testing.T) {
 		client, err := Connect(uri)
 		assert.NoError(t, err)
 		assert.NotNil(t, client)
-		defer client.Disconnect(context.Background())
+		defer func() {
+			err := client.Disconnect(context.Background())
+			if err != nil {
+				t.Errorf("Failed to disconnect from the database: %v", err)
+			}
+		}()
 	})
 
 	t.Run("InvalidURI", func(t *testing.T) {

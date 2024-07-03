@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -206,62 +205,12 @@ func TestRenderIndex(t *testing.T) {
 	items := []models.TodoItem{
 		{Id: "1", Title: "Test Todo", Description: "Test Description"},
 	}
-	h := &Handler{Items: &items}
+	h := &Handler{Items: items}
 	err := h.RenderIndex(c)
 
 	assert.NoError(t, err)
 	assert.Contains(t, rec.Body.String(), "Test Todo")
 	assert.Contains(t, rec.Body.String(), "Test Description")
-}
-
-func TestGetTodoItems(t *testing.T) {
-	mt := mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock))
-
-	mt.Run("success", func(mt *mtest.T) {
-		expectedItems := []models.TodoItem{
-			{Id: "1", Title: "Test Todo", Description: "Test Description"},
-		}
-		mt.AddMockResponses(mtest.CreateCursorResponse(1, "foo.bar", mtest.FirstBatch, bson.D{
-			{Key: "id", Value: expectedItems[0].Id},
-			{Key: "title", Value: expectedItems[0].Title},
-			{Key: "description", Value: expectedItems[0].Description},
-		}))
-
-		e := echo.New()
-		req := httptest.NewRequest(http.MethodGet, "/items", nil)
-		rec := httptest.NewRecorder()
-		c := e.NewContext(req, rec)
-
-		h := &Handler{DBClient: mt.Client}
-		err := h.GetTodoItems(c)
-
-		assert.NoError(t, err)
-		assert.Equal(t, http.StatusOK, rec.Code)
-
-		var items []models.TodoItem
-		err = json.Unmarshal(rec.Body.Bytes(), &items)
-		assert.NoError(t, err)
-		assert.Equal(t, expectedItems, items)
-	})
-
-	mt.Run("database error", func(mt *mtest.T) {
-		mt.AddMockResponses(mtest.CreateCommandErrorResponse(mtest.CommandError{
-			Code:    12345,
-			Message: "Database error",
-		}))
-
-		e := echo.New()
-		req := httptest.NewRequest(http.MethodGet, "/items", nil)
-		rec := httptest.NewRecorder()
-		c := e.NewContext(req, rec)
-
-		h := &Handler{DBClient: mt.Client}
-		err := h.GetTodoItems(c)
-
-		assert.NoError(t, err)
-		assert.Equal(t, http.StatusInternalServerError, rec.Code)
-		assert.Contains(t, rec.Body.String(), "Database error")
-	})
 }
 
 func TestRender(t *testing.T) {

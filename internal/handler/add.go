@@ -14,7 +14,6 @@ import (
 
 func (h *Handler) RenderAddTodo(c echo.Context) error {
 	r := c.Request()
-	r.ParseForm()
 	title := r.FormValue("title")
 	desc := r.FormValue("description")
 	if title != "" {
@@ -27,24 +26,24 @@ func (h *Handler) RenderAddTodo(c echo.Context) error {
 		if err != nil {
 			fmt.Println(err)
 			message := "Failed to add item"
-			Render(c, views.ErrorAlert(message))
-			return nil
+			return Render(c, views.ErrorAlert(message))
 		}
 		// *h.Items = append(*h.Items, newItem)
 		items, err := db.GetTodoItems(h.DBClient)
 		if err != nil {
 			message := "Failed to retrieve items"
-			Render(c, views.ErrorAlert(message))
-			return nil
+			return Render(c, views.ErrorAlert(message))
 		}
-		h.Items = &items
+		h.Items = items
 
 		message := "Item added successfully"
-		Render(c, views.SuccessAlert(message))
-		return Render(c, views.TodoItem(newItem))
+		renderErr := Render(c, views.TodoItem(newItem))
+		if renderErr != nil {
+			return err
+		}
+		return Render(c, views.SuccessAlert(message))
 	} else {
 		message := "Title is required"
-		Render(c, views.ErrorAlert(message))
-		return nil
+		return Render(c, views.ErrorAlert(message))
 	}
 }

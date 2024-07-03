@@ -13,6 +13,6 @@ func Render(c echo.Context, comp templ.Component) error {
 }
 
 type Handler struct {
-	Items    *[]models.TodoItem
+	Items    []models.TodoItem
 	DBClient *mongo.Client
 }

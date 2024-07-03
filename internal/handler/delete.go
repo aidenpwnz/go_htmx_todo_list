@@ -19,18 +19,19 @@ func (h *Handler) RenderDeleteTodo(c echo.Context) error {
 	err := db.DeleteTodoItem(ctx, h.DBClient, id)
 	if err != nil {
 		message := "Failed to delete item"
-		Render(c, views.ErrorAlert(message))
-		return nil
+		return Render(c, views.ErrorAlert(message))
 	}
 
 	items, err := db.GetTodoItems(h.DBClient)
 	if err != nil {
 		message := "Failed to retrieve items"
-		Render(c, views.ErrorAlert(message))
-		return nil
+		return Render(c, views.ErrorAlert(message))
 	}
-	h.Items = &items
+	h.Items = items
 
-	Render(c, views.SuccessAlert("Item deleted successfully"))
-	return Render(c, views.TodoList(*h.Items))
+	renderErr := Render(c, views.TodoList(h.Items))
+	if renderErr != nil {
+		return err
+	}
+	return Render(c, views.SuccessAlert("Item deleted successfully"))
 }
